@@ -14,7 +14,6 @@ contract ZombieFactory {
 
     Zombie[] public zombies;
 
-    // mapping to keep track of the address that owns a Zombie
     mapping (uint => address) public zombieToOwner;
     mapping (address => uint) ownerZombieCount;
 
@@ -23,7 +22,7 @@ contract ZombieFactory {
         zombieToOwner[id] = msg.sender;
         ownerZombieCount[msg.sender]++;
         emit NewZombie(id, _name, _dna);
-    } 
+    }
 
     function _generateRandomDna(string memory _str) private view returns (uint) {
         uint rand = uint(keccak256(abi.encodePacked(_str)));
@@ -31,6 +30,7 @@ contract ZombieFactory {
     }
 
     function createRandomZombie(string memory _name) public {
+        // start here
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
